@@ -15,6 +15,13 @@ public class RegisterAccountPage extends BasePage {
    private By privacyPolicyCheckbox = By.xpath("//label[@for='input-agree']");
    private By continueButton = By.xpath("//input[@value='Continue']");
    private By firstNameErrorElement = By.xpath("//input[@name= 'firstname']/following-sibling::div");
+   private By lastNameError = By.xpath("//input[@name='lastname']/following-sibling::div");
+   private By noEmailError = By.xpath("//input[@name='email']/following-sibling::div");
+   private By noTelephoneError = By.xpath("//input[@name='telephone']/following-sibling::div");
+   private By tooShortPassword = By.xpath("//input[@name='password']/following-sibling::div");
+   private By passwordConfirmationError = By.xpath("//input[@name='confirm']/following-sibling::div");
+
+
 
 
     public void insertFirstName(String firstName) {
@@ -45,6 +52,22 @@ public class RegisterAccountPage extends BasePage {
     public String getFirstNameErrorMessage() {
       return  driver.findElement(firstNameErrorElement).getText();
     }
+    public String getLastNameErrorMessage() {
+        return driver.findElement(lastNameError).getText();
+    }
+    public String getNoEmailError() {
+        return driver.findElement(noEmailError).getText();
+    }
+    public String getNoTelephoneError() {
+        return driver.findElement(noTelephoneError).getText();
+    }
+    public String getTooShortPasswordError() {
+        return driver.findElement(tooShortPassword).getText();
+    }
+    public String getPasswordConfirmationError() {
+        return driver.findElement(passwordConfirmationError).getText();
+    }
+
 
 
 }

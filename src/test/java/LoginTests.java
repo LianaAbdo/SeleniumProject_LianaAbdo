@@ -26,7 +26,7 @@ public class LoginTests {
     public void loginExistingAccount() {
 
 
-        loginPage.insertEmailAddress("mamaomidaghiceste@gmail.com");
+        loginPage.insertEmailAddress("mrslollie@mail.com");
         loginPage.setPasswordInput("Password123!");
         loginPage.clickLogin();
 
@@ -40,9 +40,9 @@ public class LoginTests {
 
     @Test
     //creating a login test with the correct e-mail address but incorrect password
-    public void incorrectLoginTry() {
+    public void incorrectPasswordLoginTry() {
 
-        loginPage.insertEmailAddress("mamaomidaghiceste@gmail.com");
+        loginPage.insertEmailAddress("mrslollie@mail.com");
         loginPage.setPasswordInput("Password123");
         loginPage.clickLogin();
 
@@ -52,12 +52,68 @@ public class LoginTests {
 
 
     }
+    @Test
+    //test for logging with incorrect email address but correct password
+    public void incorrectEmailAddressLogin() {
+        loginPage.insertEmailAddress("lollipop@gmail.com");
+        loginPage.setPasswordInput("Password123!");
+        loginPage.clickLogin();
+        String actualText = loginPage.getWarningMessage();
+        String expectedText = "Warning: No match for E-Mail Address and/or Password.";
+        Assert.assertEquals(actualText,expectedText,"This alert text is not correct");
+
+    }
+    @Test
+    public void emailNorPasswordCorrect() {
+        loginPage.insertEmailAddress("123a");
+        loginPage.setPasswordInput("123");
+        loginPage.clickLogin();
+        String actualText = loginPage.getWarningMessage();
+        String expectedText = "Warning: No match for E-Mail Address and/or Password.";
+        Assert.assertEquals(actualText,expectedText,"This is not the right warning message");
+
+
+    }
+    @Test
+    public void loginWithEmailButNoPassword() {
+        loginPage.insertEmailAddress("mrslollie@mail.com");
+        loginPage.clickLogin();
+        String actualText = loginPage.getWarningMessage();
+        String expectedText = "Warning: No match for E-Mail Address and/or Password.";
+        Assert.assertEquals(actualText,expectedText,"The actual message doesn't match the expected one");
+    }
+    @Test
+    public void loginWithoutEmailnorPassword() {
+        loginPage.clickLogin();
+        String actualText = loginPage.getWarningMessage();
+        String expectedText = "Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.";
+        Assert.assertEquals(actualText,expectedText,"This text is not the ne that should appear when you attempt numerous login failed tries");
+    }
+    @Test
+    public void loginWithoutEmailOnlyPassword () {
+        loginPage.setPasswordInput("Password123!");
+        loginPage.clickLogin();
+        String actualText = loginPage.getWarningMessage();
+        String expectedText = "Warning: Your account has exceeded allowed number of login attempts. Please try again in 1 hour.";
+        Assert.assertEquals(actualText, expectedText, "This is not the expected text");
+    }
+    @Test
+    public void forgotYourPasswordLogin() {
+        loginPage.insertEmailAddress("mrslollie@mail.com");
+        loginPage.clickForgotPassword();
+        String actualText = loginPage.getForgotPasswordText();
+        String expectedText = "Forgot Your Password?";
+        Assert.assertEquals(actualText,expectedText,"This is not the forgotten password text message");
+
+    }
+
 
     @AfterTest
     public void tearDown() {
 
         driver.quit();
     }
+
 
 }
 

@@ -1,5 +1,7 @@
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -7,57 +9,67 @@ import org.testng.annotations.Test;
 
 import static Util.TestUtil.generateRandomEmail;
 
-public class WishListFlowTests {
-    private WebDriver driver;
+public class WishListFlowTests extends BaseTest{
+
     private RegisterAccountPage registerAccountPage;
     private WishListPage wishListPage;
     private SearchResultsPage searchResultsPage;
+    private Actions action;
 
 
-    private String loginPageURL = "https://ecommerce-playground.lambdatest.io/index.php?route=account/register";
+    private String registerUrl = "https://ecommerce-playground.lambdatest.io/index.php?route=account/register";
 
 
     @BeforeClass
-    public void setUp() {
-        System.out.println("Initialize driver.");
-        driver = new ChromeDriver();
+    public void setUpPreconditions() {
         registerAccountPage = new RegisterAccountPage(driver);
         wishListPage = new WishListPage(driver);
         searchResultsPage = new SearchResultsPage(driver);
-        driver.get("https://ecommerce-playground.lambdatest.io/index.php?route=account/register");
+        action = new Actions(driver);
+        System.out.println("Creating new account to be logged in...");
         createAccount();
-    }
-
-    @BeforeMethod
-    public void beforeMethod() {
-        System.out.println("Navigate to " + loginPageURL);
-
+        System.out.println("Creating new account to be logged in... Done");
     }
 
     @Test
 
-    public void addItemToWishList() {
-        wishListPage.clickWishlist();
-
-        String actualResult = wishListPage.getNoResultsElementText();
+    public void addItemToWishList() throws Exception {
+        driver.manage().window().fullscreen();
         String expectedResult = "No results!";
-        Assert.assertEquals(actualResult, expectedResult, "Text from element is not the expected one!");
+        wishListPage.clickWishlist();
+        String actualResult = wishListPage.getNoResultsElementText();
+        Assert.assertEquals(actualResult, expectedResult, "Text from element is not the expected one.");
         wishListPage.enterTextSearch("Apple Cinema 30\"");
         wishListPage.clickSearchButton();
-        searchResultsPage.clickFirstItem();
-
+        //Wait for items to load
+        Thread.sleep(1000);
+        WebElement item = searchResultsPage.getFirstItem();
+        action.moveToElement(item).build().perform();
+        //Wait for hoover element to be displayed
+        Thread.sleep(1000);
+        WebElement button = searchResultsPage.getAddToWishlistButton();
+        action.moveToElement(button).click().build().perform();
+        //Wait for popup to be displayed
+        Thread.sleep(1000);
+        searchResultsPage.clickClosePopupButton();
+        searchResultsPage.clickWishlist();
+        int noOfItems = wishListPage.getWishListItems().size();
+        Assert.assertTrue(noOfItems == 1, "Wishlist is empty");
+        wishListPage.clickRemoveItemFromWishlistButton();
+        actualResult = wishListPage.getNoResultsElementText();
+        Assert.assertEquals(actualResult, expectedResult, "Text from element is not the expected one.");
     }
 
     public void createAccount() {
         System.out.println("Creating new account to be used in tests...");
-        registerAccountPage.insertFirstName("mama");
-        registerAccountPage.insertLastNme("omida");
+        driver.get(registerUrl);
+        registerAccountPage.insertFirstName("Mrs");
+        registerAccountPage.insertLastNme("Lollipop");
         registerAccountPage.insertEmail(generateRandomEmail());
         registerAccountPage.insertPhoneNumber("0123456");
         registerAccountPage.setPassword("Password123!");
         registerAccountPage.setPasswordConfirm("Password123!");
         registerAccountPage.checkPrivacyPolicy();
         registerAccountPage.clickContinue();
-        System.out.println("Creating new account to be used in tests...Done");
     }
 }
