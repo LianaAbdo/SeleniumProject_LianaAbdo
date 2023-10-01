@@ -48,9 +48,19 @@ public class MyDashboardTests extends BaseTest {
         Assert.assertEquals(myDashboardPage.getNewsletterElementText(),expectedNewsletterSubscription,"The Newsletter text isn't right");
     }
     @Test
-    public void updateAccountInfos() {
+    public void updateAccountPhoneNr() {
         myDashboardPage.clickEditAccountElement();
         registerAccountPage.insertPhoneNumber(generateRandomPhoneNr().toString());
+        registerAccountPage.clickContinue();
+        String actualMessage= myDashboardPage.getUpdatedMessage();
+        String expectedMessage ="Success: Your account has been successfully updated.";
+        Assert.assertEquals(actualMessage, expectedMessage, "This is not the correct message displayed");
+
+    }
+    @Test
+    public void updateAccountEmail() {
+        myDashboardPage.clickEditAccountElement();
+        registerAccountPage.insertEmail(generateRandomEmail());
         registerAccountPage.clickContinue();
         String actualMessage= myDashboardPage.getUpdatedMessage();
         String expectedMessage ="Success: Your account has been successfully updated.";
@@ -66,6 +76,23 @@ public class MyDashboardTests extends BaseTest {
     }
     @Test
     public  void subscribeToNewsletter() {
+        myDashboardPage.clickNewsletterElement();
+        myDashboardPage.clickYesSubscription();
+        registerAccountPage.clickContinue();
+        String actualTxt = registerAccountPage.getWarningMessage();
+        String expectedTxt = "Success: Your newsletter subscription has been successfully updated!";
+        Assert.assertEquals(actualTxt,expectedTxt, "The text isn't matching.");
+
+    }
+    @Test
+    public void UnsubscribeFromNewsletter() {
+        myDashboardPage.clickNewsletterElement();
+        myDashboardPage.clickNoSubscription();
+        registerAccountPage.clickContinue();
+        String actualTxt = registerAccountPage.getWarningMessage();
+        String expectedTxt = "Success: Your newsletter subscription has been successfully updated!";
+        Assert.assertEquals(actualTxt,expectedTxt, "The text isn't matching.");
+
 
     }
 

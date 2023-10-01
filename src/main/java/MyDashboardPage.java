@@ -10,9 +10,12 @@ public class MyDashboardPage extends BasePage{
     private By changePasswordElement = By.xpath(".//div[@id='content']//a[contains(@href, 'account/password')]");
     private By modifyAddressElement = By.xpath("//*[@id=\"column-right\"]/div/a[4]");
     private By myWishlistElement = By.xpath(".//div[@id='content']//a[contains(@href, 'account/wishlist')]");
-    private By newsletterElement = By.xpath(".//div[@id='content']//a[contains(@href, 'account/newsletter')]");
+    private By newsletterElement = By.xpath("//*[@id=\"content\"]/div[1]/div/div/div[5]/a");
     private By updatedMessage = By.xpath("//*[@id=\"account-account\"]/div[1]");
     private By addressBookTxt = By.xpath("//*[@id=\"content\"]/p");
+    private By yesSubscription = By.xpath("//*[@id=\"content\"]/form/fieldset/div/div/div[1]/label");
+    private By noSubscription = By.xpath("//*[@id=\"content\"]/form/fieldset/div/div/div[2]/label");
+
 
 
 
@@ -52,6 +55,15 @@ public class MyDashboardPage extends BasePage{
     }
     public String getAdressBookTxt() {
        return driver.findElement(addressBookTxt).getText();
+    }
+    public void clickNewsletterElement() {
+        driver.findElement(newsletterElement).click();
+    }
+    public void clickYesSubscription() {
+        driver.findElement(yesSubscription).click();
+    }
+    public void clickNoSubscription() {
+        driver.findElement(noSubscription).click();
     }
 
 

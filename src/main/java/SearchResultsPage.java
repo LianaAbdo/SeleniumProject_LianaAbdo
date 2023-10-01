@@ -18,6 +18,7 @@ public class SearchResultsPage extends BasePage {
     public WebElement getFirstItem() {
         return driver.findElements(resultItems).get(0);
     }
+
     public void addFirstItemToWishlist() {
         driver.findElements(addToWishlist).get(0).click();
 
@@ -29,6 +30,5 @@ public class SearchResultsPage extends BasePage {
     public void clickClosePopupButton() {
         driver.findElement(closePopupButton).click();
     }
-
 
 }
