@@ -59,6 +59,33 @@ public class WishListFlowTests extends BaseTest{
         actualResult = wishListPage.getNoResultsElementText();
         Assert.assertEquals(actualResult, expectedResult, "Text from element is not the expected one.");
     }
+    @Test
+    public void searchNoProductResult() {
+        //want to search an unexistent product and get the text message that shows
+        wishListPage.enterTextSearch("fridge");
+        wishListPage.clickSearchButton();
+        String expectedTxt= "There is no product that matches the search criteria.";
+        Assert.assertEquals(wishListPage.getNotFindingItemMsg(),expectedTxt, "There is no match");
+    }
+    @Test
+    public void addSamsungToWishlist() {
+        //searching Samsung in the search bar and adding the 3rd element found to Wishlist
+        wishListPage.enterTextSearch("Samsung");
+        wishListPage.clickSearchButton();
+        searchResultsPage.clickThirdItemSamsung();
+        searchResultsPage.addItemToWishlist();
+
+
+    }
+    @Test
+    public void removeSamsungFromWishlist () {
+        wishListPage.clickWishlist();
+        wishListPage.clickRemoveItemFromWishlistButton();
+        String expectedResult = "No results!";
+        String actualResult = wishListPage.getNoResultsElementText();
+        Assert.assertEquals(actualResult, expectedResult, "Wrong text");
+    }
+
 
     public void createAccount() {
         System.out.println("Creating new account to be used in tests...");

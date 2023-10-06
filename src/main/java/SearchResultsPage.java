@@ -10,6 +10,9 @@ public class SearchResultsPage extends BasePage {
     private By resultItems = By.xpath(".//div[@class = 'carousel-item active']/img[contains(@title, 'Apple Cinema')]");
     private By addToWishlist = By.xpath(".//button[@title = 'Add to Wish List']");
     private By closePopupButton = By.xpath(".//button[@aria-label = 'Close']");
+    private By thirdSamsung = By.xpath("//*[@id=\"entry_212469\"]/div/div[3]/div/div[2]/h4/a");
+
+
 
     public void clickFirstItem(){
         driver.findElements(resultItems).get(0).click();
@@ -19,7 +22,7 @@ public class SearchResultsPage extends BasePage {
         return driver.findElements(resultItems).get(0);
     }
 
-    public void addFirstItemToWishlist() {
+    public void addItemToWishlist() {
         driver.findElements(addToWishlist).get(0).click();
 
     }
@@ -30,5 +33,8 @@ public class SearchResultsPage extends BasePage {
     public void clickClosePopupButton() {
         driver.findElement(closePopupButton).click();
     }
+    public void clickThirdItemSamsung() {
+        driver.findElement(thirdSamsung).click();
 
+    }
 }

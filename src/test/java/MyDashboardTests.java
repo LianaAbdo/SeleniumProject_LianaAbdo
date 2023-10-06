@@ -95,11 +95,27 @@ public class MyDashboardTests extends BaseTest {
 
 
     }
+    @Test
+    public void viewOrderHistoryDownloadsRewardPoints() {
+        String expectedOrderHistory = "View your order history";
+        String expectedDownloads = "Downloads";
+        String expectedRewardPoints = "Your Reward Points";
+        Assert.assertEquals(myDashboardPage.getOrderHistory(), expectedOrderHistory, "This is not the same message");
+        Assert.assertEquals(myDashboardPage.getDownloads(), expectedDownloads,"Not th same msg.");
+        Assert.assertEquals(myDashboardPage.getRewardPointsTxt(), expectedRewardPoints, "Not correct");
 
 
+    }
+    @Test
+    public void returnRequestsYourTransactionsReccuringPayments() {
+        String expectedReturnReqTxt = "View your return requests";
+        String expectedTransactionsTxt = "Your Transactions";
+        String expectedRecurringPaymentsTxt = "Recurring payments";
+        Assert.assertEquals(myDashboardPage.getReturnRequestsTxt(), expectedReturnReqTxt, "Not good");
+        Assert.assertEquals(myDashboardPage.getTransactions(), expectedTransactionsTxt, "Nope");
+        Assert.assertEquals(myDashboardPage.getRecurringPayments(), expectedRecurringPaymentsTxt, "Try again");
 
-
-
+    }
 
     public void createAccount() {
         System.out.println("Creating new account to be used in tests...");

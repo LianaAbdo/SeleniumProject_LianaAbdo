@@ -15,6 +15,12 @@ public class MyDashboardPage extends BasePage{
     private By addressBookTxt = By.xpath("//*[@id=\"content\"]/p");
     private By yesSubscription = By.xpath("//*[@id=\"content\"]/form/fieldset/div/div/div[1]/label");
     private By noSubscription = By.xpath("//*[@id=\"content\"]/form/fieldset/div/div/div[2]/label");
+    private By viewOrderHistory = By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[1]/a/i");
+    private By downloads = By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[2]/a/i");
+    private By rewardPoints = By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[3]/a/i");
+    private By returnRequests = By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[4]/a");
+    private By transactions = By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[5]/a/i");
+    private By recurringPayments = By.xpath("//*[@id=\"content\"]/div[2]/div/div/div[6]/a/i");
 
 
 
@@ -64,6 +70,25 @@ public class MyDashboardPage extends BasePage{
     }
     public void clickNoSubscription() {
         driver.findElement(noSubscription).click();
+    }
+    public String getOrderHistory() {
+        return driver.findElement(viewOrderHistory).getText();
+    }
+    public String getDownloads() {
+        return driver.findElement(downloads).getText();
+    }
+    public String getRewardPointsTxt() {
+        return driver.findElement(rewardPoints).getText();
+    }
+    public String getReturnRequestsTxt() {
+        return driver.findElement(returnRequests).getText();
+    }
+    public String getTransactions() {
+        return driver.findElement(transactions).getText();
+    }
+    public String getRecurringPayments() {
+        return driver.findElement(recurringPayments).getText();
+
     }
 
 
